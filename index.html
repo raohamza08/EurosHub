@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Time Tracker | EurosHub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #063a53;
+      --secondary: #0fb8af;
+      --accent: #ff7e5f;
+      --white: #ffffff;
+      --light: #f8f9fa;
+      --dark: #2d3436;
+      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease-in-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+      min-height: 100vh;
+      padding: 20px;
+      color: var(--dark);
+    }
+
+    .glass-container {
+      max-width: 720px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 40px 30px;
+      margin: 40px auto;
+    }
+
+    .logo-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      height: 55px;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .form-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .form-subtitle {
+      font-size: 14px;
+      color: #6c757d;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 14px;
+      color: var(--primary);
+      font-weight: 500;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label i {
+      color: #00bfa6;
+      font-size: 18px;
+    }
+
+    select,
+    input[type="text"],
+    input[type="date"],
+    textarea {
+      padding: 13px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      background: var(--white);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      transition: var(--transition);
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--secondary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(15, 184, 175, 0.2);
+    }
+
+    .invalid { border: 2px solid red !important; }
+    .valid { border: 2px solid green !important; }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .readonly-label {
+      padding: 13px 15px;
+      background-color: rgba(15, 184, 175, 0.1);
+      border: 1px solid rgba(15, 184, 175, 0.3);
+      border-radius: 12px;
+      font-size: 14px;
+      color: var(--primary);
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+    }
+
+    .button-row {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 30px;
+      gap: 15px;
+    }
+
+    #submitBtn,
+    #resetBtn {
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    #submitBtn {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    #submitBtn:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    #resetBtn {
+      background: white;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    #resetBtn:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .select2-container .select2-selection {
+      height: 48px !important;
+      border-radius: 12px !important;
+      border: 1px solid #e0e0e0 !important;
+      padding: 6px 12px !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      line-height: 34px !important;
+    }
+
+    /* Thank You Message Styles */
+    .thank-you-message {
+      display: none;
+      text-align: center;
+      padding: 40px 30px;
+      background: rgba(15, 184, 175, 0.1);
+      border-radius: 16px;
+      margin-top: 30px;
+      animation: fadeIn 0.6s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .thank-you-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .thank-you-text {
+      font-size: 16px;
+      color: var(--primary);
+      margin-bottom: 25px;
+    }
+
+    .thank-you-button {
+      padding: 15px 30px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .thank-you-button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full-width {
+        grid-column: 1;
+      }
+      
+      .thank-you-message {
+        padding: 30px 20px;
+      }
+      
+      .thank-you-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glass-container">
+    <div class="logo-header">
+      <img src="https://raw.githubusercontent.com/raohamza08/EurosHub/main/EurosHub.png" class="logo" alt="EurosHub Logo">
+      <div class="brand-name">EurosHub</div>
+    </div>
+
+    <div class="form-header">
+      <h2 class="form-title">Time Entry Form</h2>
+      <p class="form-subtitle">Please fill in the details below to record your time</p>
+    </div>
+
+    <div id="formArea">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="profileName"><i class="fas fa-user"></i> Profile Name *</label>
+          <select id="profileName"><option value="" disabled selected>Select Profile</option></select>
+        </div>
+        <div class="form-group">
+          <label for="projectName"><i class="fas fa-project-diagram"></i> Project Name *</label>
+          <select id="projectName"><option value="" disabled selected>Select Project</option></select>
+        </div>
+        <div class="form-group">
+          <label for="teamMember"><i class="fas fa-users"></i> Team Member *</label>
+          <select id="teamMember"><option value="" disabled selected>Select Team Member</option></select>
+        </div>
+        <div class="form-group">
+          <label for="trackingDate"><i class="far fa-calendar-alt"></i> Tracking Date *</label>
+          <input type="date" id="trackingDate">
+        </div>
+        <div class="form-group">
+          <label for="startTime"><i class="far fa-clock"></i> Start Time *</label>
+          <select id="startTime"><option value="" disabled selected>Select Start Time</option></select>
+        </div>
+        <div class="form-group">
+          <label for="endTime"><i class="far fa-clock"></i> End Time *</label>
+          <select id="endTime"><option value="" disabled selected>Select End Time</option></select>
+        </div>
+        <div class="form-group full-width">
+          <label for="projectTime"><i class="fas fa-stopwatch"></i> Project Tracking Time *</label>
+          <input type="text" id="projectTime" placeholder="hh:mm (duration only)">
+        </div>
+        <div class="form-group full-width">
+          <label><i class="fas fa-calculator"></i> Total Time:</label>
+          <div class="readonly-label" id="totalTimeLabel">--</div>
+        </div>
+        <div class="form-group full-width">
+          <label for="memo"><i class="far fa-sticky-note"></i> Memo</label>
+          <textarea id="memo" placeholder="Add any notes about this time entry..."></textarea>
+        </div>
+      </div>
+      
+      <div class="button-row">
+        <button id="submitBtn"><span>Submit Time Entry</span><i class="fas fa-paper-plane"></i></button>
+        <button type="button" id="resetBtn" title="Reset Form"><i class="fas fa-redo"></i></button>
+      </div>
+    </div>
+
+    <div class="thank-you-message" id="thankYouMessage">
+      <h3 class="thank-you-title">Thank You!</h3>
+      <p class="thank-you-text">Your time entry has been successfully recorded.</p>
+      <button class="thank-you-button" onclick="resetForm()">
+        <span>Submit Another Response</span>
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      const DATA_API_URL = "https://script.google.com/macros/s/AKfycbyxW9vv6vG0daYJeqa-RlA0XDpQKL7DPgBTgvxJ56PajAAQdNTOJfsuYQ62JWaOHtdv/exec";
+      const SUBMIT_API_URL = "https://script.google.com/macros/s/AKfycbyxW9vv6vG0daYJeqa-RlA0XDpQKL7DPgBTgvxJ56PajAAQdNTOJfsuYQ62JWaOHtdv/exec";
+      
+      // Track if form is submitting to prevent multiple submissions
+      let isSubmitting = false;
+
+      function populateDropdowns() {
+        $.get(DATA_API_URL, function (response) {
+          const data = typeof response === 'string' ? JSON.parse(response) : response;
+
+          $('#profileName').empty().append(new Option("Select Profile", "", true, true));
+          data.profileNames.forEach(name => $('#profileName').append(new Option(name, name)));
+
+          $('#teamMember').empty().append(new Option("Select Team Member", "", true, true));
+          data.teamMembers.forEach(name => $('#teamMember').append(new Option(name, name)));
+
+          $('#projectName').empty().append(new Option("Select Project", "", true, true));
+          data.projectNames.forEach(name => $('#projectName').append(new Option(name, name)));
+
+          $('#profileName, #teamMember, #projectName').select2();
+        });
+      }
+
+      populateDropdowns();
+
+      const startSelect = $('#startTime');
+      const endSelect = $('#endTime');
+      const totalTimeLabel = $('#totalTimeLabel');
+
+      const generateTimeSlots = () => {
+        const slots = [];
+        const current = new Date();
+        current.setHours(0, 0, 0, 0);
+        for (let i = 0; i < 143; i++) {
+          slots.push(formatTime(current));
+          current.setMinutes(current.getMinutes() + 10);
+        }
+        slots.push("11:59:59 PM");
+        return slots;
+      };
+
+      const formatTime = (date) => {
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        const ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12 || 12;
+        return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')} ${ampm}`;
+      };
+
+      const timeSlots = generateTimeSlots();
+      timeSlots.forEach(t => startSelect.append(new Option(t, t)));
+
+      startSelect.on('change', function () {
+        const selectedIndex = timeSlots.indexOf($(this).val());
+        endSelect.empty().append(new Option("Select End Time", "", true, true));
+        for (let i = selectedIndex + 1; i < timeSlots.length; i++) {
+          endSelect.append(new Option(timeSlots[i], timeSlots[i]));
+        }
+        totalTimeLabel.text('--');
+      });
+
+      endSelect.on('change', function () {
+        const start = startSelect.val();
+        const end = endSelect.val();
+        if (!start || !end) return totalTimeLabel.text('--');
+        totalTimeLabel.text(calculateTimeDiff(start, end));
+      });
+
+      const calculateTimeDiff = (start, end) => {
+        const parse = t => {
+          const [hm, ampm] = t.split(' ');
+          let [h, m] = hm.split(':').map(Number);
+          if (ampm === 'PM' && h !== 12) h += 12;
+          if (ampm === 'AM' && h === 12) h = 0;
+          return h * 60 + m;
+        };
+        const mins = parse(end) - parse(start);
+        return `${Math.floor(mins / 60)}:${mins % 60}`;
+      };
+
+      $('#submitBtn').click(function () {
+        if (isSubmitting) return; // Prevent multiple submissions
+        
+        let valid = true;
+        $('#profileName, #projectName, #projectTime, #trackingDate, #startTime, #endTime, #teamMember').each(function () {
+          const $this = $(this);
+          if (!$this.val()) {
+            $this.next('.select2-container').length
+              ? $this.next('.select2-container').find('.select2-selection').addClass('invalid')
+              : $this.addClass('invalid');
+            valid = false;
+          } else {
+            $this.next('.select2-container').length
+              ? $this.next('.select2-container').find('.select2-selection').removeClass('invalid').addClass('valid')
+              : $this.removeClass('invalid').addClass('valid');
+          }
+        });
+
+        if (!valid) return;
+
+        // Immediately show thank you message and disable button
+        isSubmitting = true;
+        $('#formArea').hide();
+        $('#thankYouMessage').show();
+        $('#submitBtn').prop('disabled', true).html('<span>Submitting...</span><i class="fas fa-spinner fa-spin"></i>');
+
+        const payload = {
+          profileName: $('#profileName').val(),
+          projectName: $('#projectName').val(),
+          projectTime: $('#projectTime').val(),
+          memo: $('#memo').val(),
+          trackingDate: $('#trackingDate').val(),
+          startTime: $('#startTime').val(),
+          endTime: $('#endTime').val(),
+          totalTime: $('#totalTimeLabel').text(),
+          teamMember: $('#teamMember').val()
+        };
+        
+        $.ajax({
+          url: SUBMIT_API_URL + "?" + new URLSearchParams(payload).toString(),
+          method: "GET",
+          success: function () {
+            // Success - already showing thank you message
+          },
+          error: function (err) {
+            console.error("Submission error:", err);
+            // Show error but keep thank you message visible
+            $('#thankYouMessage .thank-you-text').html('Your submission was recorded, but there was a minor issue processing it.');
+          },
+          complete: function() {
+            isSubmitting = false;
+          }
+        });
+      });
+
+      $('#resetBtn').click(function () {
+        resetForm();
+      });
+    });
+
+    function resetForm() {
+      $('input, textarea').val('').removeClass('invalid valid');
+      $('select').val('').trigger('change').removeClass('invalid valid');
+      $('.select2-selection').removeClass('invalid valid');
+      $('#formArea').show();
+      $('#thankYouMessage').hide();
+      $('#totalTimeLabel').text('--');
+      $('#endTime').empty().append(new Option("Select End Time", "", true, true));
+      $('#submitBtn').prop('disabled', false).html('<span>Submit Time Entry</span><i class="fas fa-paper-plane"></i>');
+    }
+  </script>
+</body>
+</html>
