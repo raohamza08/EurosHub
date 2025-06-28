@@ -2,25 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Project Time Tracker | EurosHub</title>
+  <title>EurosHub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://raw.githubusercontent.com/raohamza08/EurosHub/main/EurosHub.png" type="image/png" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --primary: #063a53;
-      --secondary: #0fb8af;
-      --accent: #ff7e5f;
-      --white: #ffffff;
-      --light: #f8f9fa;
-      --dark: #2d3436;
-      --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease-in-out;
-    }
+      <style>:root {
+          --primary: #063A53;
+          --secondary: #00BFA6;
+          --accent: #FFB200;
+          --white: #ffffff;
+          --light: #F8F9FA;
+          --dark: #1C1C1C;
+          --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
+          --transition: all 0.3s ease-in-out;
+
+          --bg-color: #F8F9FA;
+          --bg-gradient: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+          --container-bg: #FFFFFF;
+          --text-color: #212529;
+          --input-bg: #FFFFFF;
+          --border-color: #CED4DA;
+          --readonly-bg: rgba(255, 76, 41, 0.1);
+          --readonly-border: rgba(255, 76, 41, 0.3);
+          --placeholder-color: #6C757D;
+          --label-color: #063A53;
+          --heading-color: var(--primary); /* New variable for headings */
+        }
+
+        [data-theme="dark"] {
+          --bg-color: #212529;
+          --bg-gradient: linear-gradient(135deg, #212529 0%, #343a40 100%);
+          --container-bg: #343a40;
+          --text-color: #f8f9fa;
+          --input-bg: #495057;
+          --border-color: #6c757d;
+          --readonly-bg: rgba(13, 110, 253, 0.2);
+          --readonly-border: #0d6efd66;
+          --placeholder-color: #adb5bd;
+          --label-color: #f8f9fa;
+          --heading-color: #ffffff; /* Headings turn white in dark mode */
+        }
+
 
     * {
       box-sizing: border-box;
@@ -30,20 +57,106 @@
 
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+      background: var(--bg-gradient);
       min-height: 100vh;
       padding: 20px;
-      color: var(--dark);
+      color: var(--text-color);
+      transition: var(--transition);
     }
 
     .glass-container {
       max-width: 720px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.96);
+      background: var(--container-bg);
       border-radius: 24px;
       box-shadow: var(--shadow);
       padding: 40px 30px;
       margin: 40px auto;
+      transition: var(--transition);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      transition: var(--transition);
+      border: none;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-toggle i {
+      font-size: 20px;
+    }
+
+    ::placeholder {
+      color: var(--placeholder-color);
+      opacity: 1;
+    }
+
+    /* Select2 Base Styles */
+    .select2-container .select2-selection {
+      height: 48px !important;
+      border-radius: 12px !important;
+      border: 1px solid var(--border-color) !important;
+      padding: 6px 12px !important;
+      background: var(--input-bg) !important;
+      color: var(--text-color) !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+      line-height: 34px !important;
+      color: var(--text-color) !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__placeholder {
+      color: var(--placeholder-color) !important;
+    }
+
+    /* Select2 Dropdown Styling for Light & Dark Modes */
+    .select2-container--default .select2-dropdown {
+      background-color: var(--input-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+    }
+
+    .select2-container--default .select2-results__option {
+      background-color: var(--input-bg);
+      color: var(--text-color);
+    }
+
+    .select2-container--default .select2-results__option--highlighted {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    [data-theme="dark"] .select2-container--default .select2-dropdown {
+      background-color: var(--input-bg) !important;
+      color: var(--text-color) !important;
+      border: 1px solid var(--border-color) !important;
+    }
+
+    [data-theme="dark"] .select2-container--default .select2-results__option {
+      background-color: var(--input-bg) !important;
+      color: var(--text-color) !important;
+    }
+
+    [data-theme="dark"] .select2-container--default .select2-results__option--highlighted {
+      background-color: var(--secondary) !important;
+      color: white !important;
     }
 
     .logo-header {
@@ -58,12 +171,12 @@
       height: 55px;
     }
 
-    .brand-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      color: var(--primary);
-      font-weight: 700;
-    }
+   .brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--heading-color); /* Use heading color variable */
+  font-weight: 700;
+}
 
     .form-header {
       text-align: center;
@@ -71,16 +184,17 @@
     }
 
     .form-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 26px;
-      color: var(--primary);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  color: var(--heading-color); /* Use heading color variable */
+  margin-bottom: 8px;
+  font-weight: 600;
+}
 
     .form-subtitle {
       font-size: 14px;
-      color: #6c757d;
+      color: var(--text-color);
+      opacity: 0.8;
     }
 
     .form-grid {
@@ -100,7 +214,7 @@
 
     label {
       font-size: 14px;
-      color: var(--primary);
+      color: var(--label-color);
       font-weight: 500;
       margin-bottom: 6px;
       display: flex;
@@ -118,11 +232,12 @@
     input[type="date"],
     textarea {
       padding: 13px 15px;
-      border: 1px solid #e0e0e0;
+      border: 1px solid var(--border-color);
       border-radius: 12px;
       font-size: 14px;
       font-family: 'Poppins', sans-serif;
-      background: var(--white);
+      background: var(--input-bg);
+      color: var(--text-color);
       box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       transition: var(--transition);
     }
@@ -145,8 +260,8 @@
 
     .readonly-label {
       padding: 13px 15px;
-      background-color: rgba(15, 184, 175, 0.1);
-      border: 1px solid rgba(15, 184, 175, 0.3);
+      background-color: var(--readonly-bg);
+      border: 1px solid var(--readonly-border);
       border-radius: 12px;
       font-size: 14px;
       color: var(--primary);
@@ -177,7 +292,7 @@
     }
 
     #submitBtn {
-      background: var(--primary);
+      background: var(--secondary);
       color: white;
       border: none;
     }
@@ -188,7 +303,7 @@
     }
 
     #resetBtn {
-      background: white;
+      background: var(--input-bg);
       color: var(--primary);
       border: 1px solid var(--primary);
     }
@@ -198,23 +313,11 @@
       color: white;
     }
 
-    .select2-container .select2-selection {
-      height: 48px !important;
-      border-radius: 12px !important;
-      border: 1px solid #e0e0e0 !important;
-      padding: 6px 12px !important;
-    }
-
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-      line-height: 34px !important;
-    }
-
-    /* Thank You Message Styles */
     .thank-you-message {
       display: none;
       text-align: center;
       padding: 40px 30px;
-      background: rgba(15, 184, 175, 0.1);
+      background: var(--readonly-bg);
       border-radius: 16px;
       margin-top: 30px;
       animation: fadeIn 0.6s ease;
@@ -235,7 +338,7 @@
 
     .thank-you-text {
       font-size: 16px;
-      color: var(--primary);
+      color: var(--text-color);
       margin-bottom: 25px;
     }
 
@@ -263,7 +366,7 @@
       .form-grid {
         grid-template-columns: 1fr;
       }
-
+      
       .full-width {
         grid-column: 1;
       }
@@ -277,8 +380,8 @@
       }
     }
   </style>
-</head>
 
+</head>
 <body>
   <div class="glass-container">
     <div class="logo-header">
@@ -287,7 +390,7 @@
     </div>
 
     <div class="form-header">
-      <h2 class="form-title">Time Entry Form</h2>
+      <h2 class="form-title">Report Intake Form</h2>
       <p class="form-subtitle">Please fill in the details below to record your time</p>
     </div>
 
@@ -347,12 +450,55 @@
     </div>
   </div>
 
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
   <script>
     $(document).ready(function () {
+      // Theme toggle functionality
+      const themeToggle = $('#themeToggle');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+      
+      // Check for saved theme preference or use system preference
+      const currentTheme = localStorage.getItem('theme') || 
+                          (prefersDarkScheme.matches ? 'dark' : 'light');
+      
+      // Apply the current theme
+      if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeToggle.html('<i class="fas fa-sun"></i>');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        themeToggle.html('<i class="fas fa-moon"></i>');
+      }
+      
+      // Toggle theme on button click
+    themeToggle.on('click', function() {
+  let theme;
+  if (document.documentElement.getAttribute('data-theme') === 'dark') {
+    document.documentElement.removeAttribute('data-theme');
+    themeToggle.html('<i class="fas fa-moon"></i>');
+    theme = 'light';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeToggle.html('<i class="fas fa-sun"></i>');
+    theme = 'dark';
+  }
+  localStorage.setItem('theme', theme);
+
+  // Fix dropdown lag: re-initialize Select2 after theme switch
+  setTimeout(() => {
+    $('#profileName, #teamMember, #projectName').select2();
+  }, 50);
+});
+
+
+      // Rest of your existing functionality
       const DATA_API_URL = "https://script.google.com/macros/s/AKfycbyxW9vv6vG0daYJeqa-RlA0XDpQKL7DPgBTgvxJ56PajAAQdNTOJfsuYQ62JWaOHtdv/exec";
       const SUBMIT_API_URL = "https://script.google.com/macros/s/AKfycbyxW9vv6vG0daYJeqa-RlA0XDpQKL7DPgBTgvxJ56PajAAQdNTOJfsuYQ62JWaOHtdv/exec";
       
-      // Track if form is submitting to prevent multiple submissions
       let isSubmitting = false;
 
       function populateDropdowns() {
@@ -430,7 +576,7 @@
       };
 
       $('#submitBtn').click(function () {
-        if (isSubmitting) return; // Prevent multiple submissions
+        if (isSubmitting) return;
         
         let valid = true;
         $('#profileName, #projectName, #projectTime, #trackingDate, #startTime, #endTime, #teamMember').each(function () {
@@ -449,7 +595,6 @@
 
         if (!valid) return;
 
-        // Immediately show thank you message and disable button
         isSubmitting = true;
         $('#formArea').hide();
         $('#thankYouMessage').show();
@@ -475,7 +620,6 @@
           },
           error: function (err) {
             console.error("Submission error:", err);
-            // Show error but keep thank you message visible
             $('#thankYouMessage .thank-you-text').html('Your submission was recorded, but there was a minor issue processing it.');
           },
           complete: function() {
@@ -501,4 +645,5 @@
     }
   </script>
 </body>
+
 </html>
