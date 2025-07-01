@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1060,13 +1059,10 @@
 
         if (!valid) return;
 
-        isSubmitting = false;
+        isSubmitting = true;
         $('#formArea').hide();
-        $('#projectForm').hide();
         $('#thankYouMessage').removeClass('hidden');
-        $('#submitBtn').prop('disabled', true)
-        submitBtn.html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
-
+        $('#submitBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Submitting...');
 
         const payload = {
           profileName: $('#profileName').val(),
