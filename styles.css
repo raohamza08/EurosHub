@@ -1,0 +1,941 @@
+:root {
+  --primary: #00BFA6;
+  --primary-light: #00BFA6;
+  --secondary: #00BFA6;
+  --secondary-dark: #049c88;
+  --text-color: #f8f9fa;
+  --input-bg: #343a40;
+  --border-color: #495057;
+  --light: #212529;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.25);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.25);
+  --success-bg: rgba(6, 58, 83, 0.2);
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--light);
+  color: var(--text-color);
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.glass-container {
+  max-width: 720px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05); /* ✅ Fixed transparency */
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  padding: 40px;
+  margin: 20px;
+  transition: var(--transition);
+}
+
+[data-theme="dark"] .glass-container {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.logo-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.logo {
+  height: 55px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.form-title {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 25px;
+  position: relative;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 14px;
+  transition: var(--transition);
+}
+
+select, input[type="text"], input[type="date"], input[type="time"], textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-family: inherit;
+  font-size: 15px;
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  height: 50px;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+select:focus, input:focus, textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.2);
+}
+
+/* Custom select styling */
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Option styling */
+option {
+  background: var(--input-bg);
+  color: var(--text-color);
+  padding: 10px;
+}
+
+option:checked {
+  background: var(--primary);
+  color: white;
+}
+
+option:hover {
+  background: var(--primary-light);
+  color: white;
+}
+
+.time-group {
+  display: flex;
+  gap: 15px;
+}
+
+.time-group > div {
+  flex: 1;
+}
+
+.hours-display {
+  font-weight: 600;
+  color: var(--primary);
+  margin-top: 8px;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.hours-display i {
+  color: var(--secondary);
+}
+
+.btn {
+  padding: 16px 24px;
+  background: var(--primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+  box-shadow: var(--shadow-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 54px;
+}
+
+.btn:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 14px rgba(6, 58, 83, 0.2);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--primary-light);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-dark);
+  box-shadow: 0 7px 14px rgba(0, 191, 166, 0.2);
+}
+
+.hidden { 
+  display: none;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.other-project-input {
+  margin-top: 10px;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.thank-you {
+  text-align: center;
+  padding: 40px;
+  background: var(--success-bg);
+  border-radius: 16px;
+  margin-top: 30px;
+  animation: fadeIn 0.5s ease-out;
+  border: 1px solid rgba(0, 191, 166, 0.3);
+}
+
+.thank-you h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.thank-you p {
+  margin-bottom: 25px;
+  font-size: 16px;
+}
+
+.theme-toggle {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+  z-index: 100;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.input-icon {
+  position: absolute;
+  right: 15px;
+  top: 38px;
+  color: var(--secondary);
+  pointer-events: none;
+}
+
+/* Loading spinner */
+.fa-spinner {
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.selection-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+[data-theme="dark"] .selection-card {
+  background: var(--input-bg);
+}
+
+
+
+@keyframes revealCard {
+  0% {
+    opacity: 0;
+    transform: rotateX(15deg) translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(0deg) translateY(0) scale(1);
+  }
+}
+.selection-card {
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  z-index: 1;
+}
+
+.selection-card {
+  position: relative;
+  overflow: hidden;
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-align: center;
+  transition: 0.4s;
+}
+
+
+
+.selection-card:hover {
+  transform: perspective(800px) rotateX(2deg) rotateY(2deg) scale(1.02);
+  box-shadow: 0 20px 30px rgba(3, 213, 185, 0.2), 0 0 15px rgba(1, 208, 181, 0.15);
+}
+
+
+
+.selection-card i {
+  font-size: 36px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.selection-card h3 {
+  font-family: 'Playfair Display', serif;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+.selection-card p {
+  color: var(--text-color);
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.back-btn {
+  margin-bottom: 25px;
+  background: none;
+  border: none;
+  color: var(--secondary-dark);
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.back-btn:hover {
+  color: var(--primary-light);
+}
+
+/* Radio Button Styles */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding: 15px;
+  background: var(--input-bg);
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.radio-option input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+
+.radio-option input[type="radio"]:checked {
+  border-color: var(--secondary);
+}
+
+.radio-option input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  background: var(--secondary);
+  border-radius: 50%;
+}
+
+.radio-option label {
+  margin: 0;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+/* Select2 Overrides */
+.select2-container .select2-selection {
+  height: 50px !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--border-color) !important;
+  padding: 6px 12px !important;
+  background: var(--input-bg) !important;
+  color: var(--text-color) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 36px !important;
+  color: var(--text-color) !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: var(--text-color) !important;
+  opacity: 0.7;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 48px !important;
+}
+
+.select2-container--default .select2-dropdown {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.select2-container--default .select2-results__option {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.select2-container--default .select2-results__option--highlighted {
+  background-color: var(--primary) !important;
+  color: white !important;
+}
+
+.invalid { 
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+}
+
+.valid { border: 2px solid #00C851 !important; }
+
+.select2-selection.invalid {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2) !important;
+}
+
+/* Form grid layout */
+.form-grid-two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.button-group-grid, .project-button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .glass-container {
+    padding: 30px 20px;
+    margin: 15px;
+  }
+  
+  .time-group, .time-fields {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-title {
+    font-size: 22px;
+  }
+  
+  body {
+    padding: 10px;
+    align-items: flex-start;
+  }
+  
+  .selection-cards, .form-grid-two-column, 
+  .side-by-side, .button-group-grid, 
+  .project-button-group {
+    grid-template-columns: 1fr;
+  }
+  
+  .side-by-side .form-group,
+  .time-fields .form-group {
+    margin-bottom: 15px;
+  }
+}
+
+/* Fix icon alignment */
+.form-group label i {
+  width: 20px;
+  text-align: center;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.form-group.with-icon select,
+.form-group.with-icon input {
+  padding-right: 40px;
+}
+/* Add this to your existing styles.css */
+.selection-card .btn {
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.selection-card .btn i {
+  margin: 0;
+  line-height: 1;
+  height: auto;
+}
+/* Add this to ensure consistent sizing for all form elements */
+.form-group select,
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"],
+.form-group textarea,
+.form-group .select2-container {
+  width: 100% !important;
+  min-width: 100% !important;
+}
+
+/* Ensure Select2 dropdown matches other inputs */
+.select2-container--default .select2-selection--single {
+  height: 50px !important;
+  line-height: 50px !important;
+  padding: 0 16px !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 50px !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 48px !important;
+  right: 10px !important;
+}
+
+/* Make sure all inputs have the same height */
+select, 
+input[type="text"], 
+input[type="date"], 
+input[type="time"], 
+.select2-container .select2-selection {
+  height: 50px !important;
+  line-height: 50px !important;
+}
+
+/* Ensure consistent padding */
+select, 
+input[type="text"], 
+input[type="date"], 
+input[type="time"], 
+.select2-container .select2-selection {
+  padding: 0 16px !important;
+}
+/* Add these styles to your existing CSS file */
+
+/* Date input styling */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+  padding: 5px;
+}
+
+[data-theme="dark"] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  color: var(--text-color);
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+  background: var(--input-bg);
+}
+
+input[type="date"]::-webkit-datetime-edit-text {
+  color: var(--text-color);
+  padding: 0 0.3em;
+}
+
+/* Time input styling */
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5);
+  cursor: pointer;
+  padding: 5px;
+}
+
+[data-theme="dark"] input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input[type="time"]::-webkit-datetime-edit {
+  color: var(--text-color);
+}
+
+input[type="time"]::-webkit-datetime-edit-fields-wrapper {
+  background: var(--input-bg);
+}
+
+input[type="time"]::-webkit-datetime-edit-ampm-field {
+  color: var(--text-color);
+}
+
+/* For Firefox */
+input[type="date"],
+input[type="time"] {
+  color-scheme: light;
+}
+
+[data-theme="dark"] input[type="date"],
+[data-theme="dark"] input[type="time"] {
+  color-scheme: dark;
+}
+
+@-moz-document url-prefix() {
+  select {
+    background-image: none !important;
+  }
+}
+
+
+#stars-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: #000;
+}
+#stars-js canvas {
+  filter: drop-shadow(0 0 3px #00d9bd);
+}
+
+.glass-container {
+  animation: fadeSlideIn 0.9s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  transform-origin: center;
+  opacity: 0;
+}
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+}
+
+.btn:hover::before {
+  animation: shine 1s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+/* Apply shimmer hover effect to trackingDate input and selects */
+#trackingDate{
+  position: relative;
+  overflow: hidden;
+}
+
+#trackingDate::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(0, 191, 166, 0.05) 0%,
+    rgba(0, 191, 166, 0.25) 50%,
+    rgba(0, 191, 166, 0.05) 100%
+  );
+  transform: skewX(-25deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+#trackingDate:hover::before{
+  animation: shine 0.8s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    left: -75%;
+  }
+  100% {
+    left: 125%;
+  }
+}
+
+.radio-option input[type="radio"] {
+  background: #212529;
+  border: 2px solid var(--border-color);
+  box-shadow: inset 0 0 0 4px #212529;
+  transition: all 0.2s ease-in-out;
+}
+
+.radio-option input[type="radio"]:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(0, 191, 166, 0.4);
+}
+
+.radio-option input[type="radio"]:checked {
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(0, 191, 166, 0.8);
+}
+
+.radio-option input[type="radio"]:checked::before {
+  background: var(--primary);
+}
+
+/* Glow effect on input fields when hovered */
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="time"]:hover,
+textarea:hover,
+select:hover,
+.select2-selection:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 8px rgba(0, 191, 166, 0.3), inset 0 0 2px rgba(0, 191, 166, 0.1);
+  transition: all 0.25s ease;
+}
+
+/* Focused state gets stronger glow */
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus,
+textarea:focus,
+select:focus,
+.select2-selection:focus {
+  box-shadow: 0 0 10px rgba(0, 191, 166, 0.5), 0 0 0 3px rgba(0, 191, 166, 0.2);
+}
+
+/* Optional: Add slight scale animation on hover */
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="time"]:hover,
+textarea:hover,
+select:hover,
+.select2-selection:hover {
+  transform: scale(1.01);
+}
+
+/* Make sure transition is smooth */
+input, select, textarea, .select2-selection {
+  transition: border 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+input:hover,
+select:hover,
+textarea:hover,
+.select2-selection:hover {
+  filter: drop-shadow(0 0 3px rgba(0, 191, 166, 0.25));
+}
+.input-icon {
+  transition: transform 0.3s ease;
+}
+
+.input-icon.rotate {
+  transform: rotate(180deg);
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: var(--input-bg); /* Your existing dark input background */
+  background-image: none !important; /* ✅ Removes the default arrow */
+  padding-right: 40px; /* Leave space for your custom icon */
+  color: var(--text-color);
+}
+.select-wrapper {
+  position: relative;
+}
+
+/* Remove all default browser dropdowns */
+.custom-select-wrapper select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: var(--input-bg);
+  background-image: none !important;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px 40px 14px 16px;
+  color: var(--text-color);
+  font-size: 15px;
+  width: 100%;
+  height: 50px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix double arrow issue on Safari, Firefox, Edge */
+.custom-select-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.custom-select-wrapper select::-ms-expand {
+  display: none;
+}
+
+.custom-select-wrapper i.input-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 2;
+  color: var(--secondary);
+}
+/* Glassy input styling */
+select,
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea,
+.select2-container .select2-selection {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text-color);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease;
+}
+
+/* On hover */
+select:hover,
+input[type="text"]:hover,
+input[type="date"]:hover,
+input[type="time"]:hover,
+textarea:hover,
+.select2-container .select2-selection:hover {
+  box-shadow: 0 0 0 3px rgba(0, 191, 166, 0.2);
+  border-color: var(--primary);
+}
+
+:root {
+  --input-glass-bg: rgba(255, 255, 255, 0.05);
+  --input-glass-border: rgba(255, 255, 255, 0.2);
+}
+
+select,
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea {
+  background: var(--input-glass-bg) !important;
+  border: 1px solid var(--input-glass-border);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
