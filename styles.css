@@ -1359,41 +1359,172 @@ select:focus,
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
   border-color: #00A693 transparent transparent transparent !important;
 }
- .time-picker-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
-            border: 1px solid rgba(0, 217, 189, 0.3);
-        }
 
-        .time-picker {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            position: relative;
-        }
+/* === Enhanced Mobile Responsiveness Additions === */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
 
-        .time-input {
-            background: #00d9bd; /* Changed from blue to cyan */
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            min-width: 50px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
+  .glass-container {
+    padding: 25px 16px;
+    margin: 10px;
+  }
 
-        .time-input:hover {
-            background: #00bfa6; /* Darker cyan on hover */
-            transform: translateY(-2px);
-        }
+  .logo-header {
+    flex-direction: column;
+    gap: 10px;
+  }
 
-        .time-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 217, 189, 0.4);
-        }
+  .form-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .form-grid-two-column,
+  .side-by-side,
+  .selection-cards,
+  .button-group-grid,
+  .project-button-group {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid-two-column .form-group,
+  .side-by-side .form-group,
+  .time-group > div {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+
+  .time-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn,
+  .review-modal .btn,
+  .review-modal .btn-secondary {
+    font-size: 15px;
+    padding: 14px 20px;
+  }
+
+  .time-type-radio-group {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .review-modal {
+    padding: 20px;
+  }
+
+  .review-modal h3 {
+    font-size: 20px;
+  }
+
+  .review-modal li {
+    font-size: 14px;
+  }
+
+  .theme-toggle {
+    bottom: 15px;
+    right: 15px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+
+  #passwordOverlay input,
+  #passwordInput {
+    width: 90%;
+    font-size: 15px;
+  }
+
+  .password-container {
+    padding: 20px;
+    min-width: unset;
+    width: 90%;
+  }
+}
+/* Eye icon - responsive fix */
+.password-eye {
+  position: absolute;
+  right: 20px; /* Aligns nicely inside the input */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  z-index: 2;
+}
+
+/* Ensure password input has padding-right for icon */
+#passwordInput {
+  padding: 12px 44px 12px 16px; /* More right padding */
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-family: inherit;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+  position: relative;
+}
+.time-type-radio-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 15px;
+  color: var(--text-color);
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.time-type-radio-group input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--input-bg);
+  border: 2px solid var(--border-color);
+  position: relative;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.time-type-radio-group input[type="radio"]:checked {
+  border-color: var(--primary);
+  box-shadow: 0 0 6px rgba(0, 191, 166, 0.8);
+}
+
+.time-type-radio-group input[type="radio"]:checked::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+.time-type-radio-group label {
+  margin: 0;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--text-color);
+}
