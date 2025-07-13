@@ -458,6 +458,10 @@ console.log({
   // Initialize forms
   initProjectForm();
   initOvertimeForm();
+
+  $('#enterPasswordBtn').on('click', function () {
+  checkPassword();
+});
 });
 
 // Password functions (from inline script in HTML)
