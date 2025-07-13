@@ -6,79 +6,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="https://raw.githubusercontent.com/raohamza08/EurosHub/main/EurosHub.png" type="image/png" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+  /* Cyan background for highlighted/selected item */
+  .select2-results__option--highlighted {
+    background-color: #00a693 !important;
+    color: white !important;
+  }
+
+  /* Dropdown main field border (optional) */
+  .select2-container--default .select2-selection--single {
+    border: 1px solid #00a693;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+  }
+
+  /* Optional focus ring */
+  .select2-container--default .select2-selection--single:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #00a693;
+  }
+
+  /* Fix text color inside dropdown */
+  .select2-container--default .select2-results__option {
+    color: white;
+    background-color: transparent;
+
+    
+  }
+</style>
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@3.3.0/tsparticles.bundle.min.js"></script>
-
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
 </head>
-<script>
-  function checkPassword() {
-    const input = document.getElementById('passwordInput').value;
-    if (input === "EurosHub") {
-      document.getElementById('passwordOverlay').style.display = "none";
-    } else {
-      document.getElementById('passwordError').style.display = "block";
-    }
-  }
-
-  // Optional: allow Enter key
-  document.addEventListener("keydown", function(e) {
-    if (e.key === "Enter") {
-      checkPassword();
-    }
-  });
-</script>
 
 <body data-theme="dark">
-  <!-- Main Selection Page -->
-   <div id="stars-js"></div>
-   <div id="passwordOverlay" style="
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.85);
-  backdrop-filter: blur(10px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  flex-direction: column;
-  font-family: 'Poppins', sans-serif;
-  color: white;
-">
-  <h2 style="margin-bottom: 20px;">Enter Password to Continue</h2>
-  <input type="password" id="passwordInput" placeholder="Password" style="
-    padding: 12px 16px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-    margin-bottom: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    width: 260px;
-    text-align: center;
-  ">
-  <button onclick="checkPassword()" style="
-    padding: 10px 18px;
-    font-size: 16px;
-    background-color: #00BFA6;
-    border: none;
-    border-radius: 6px;
-    color: white;
-    cursor: pointer;
-  ">Enter</button>
-  <p id="passwordError" style="color: #f87171; margin-top: 10px; display: none;">Incorrect password</p>
+  <!-- Password Overlay -->
+  <div id="passwordOverlay">
+    <div class="password-container">
+      <h2>Enter Password to Continue</h2>
+      <input type="password" id="passwordInput" placeholder="Password">
+      <div class="password-eye">
+  <i id="togglePassword" class="fas fa-eye"></i>
 </div>
+      <button type="button">Enter</button>
+      <p id="passwordError">Incorrect password</p>
+    </div>
+  </div>
 
-   
-<div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
+  <!-- Main Selection Page -->
+  <div id="stars-js"></div>   
+  <div id="tsparticles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;"></div>
 
   <div class="glass-container" id="selectionPage">
     <div class="logo-header">
@@ -91,7 +72,6 @@
     <p style="text-align: center; margin-bottom: 30px;">Select the type of time entry you'd like to record:</p>
     
     <div class="selection-cards">
-     
       <div class="selection-card" id="reportIntakeBtn">
         <i class="fas fa-tasks" ></i>
         <h3>Project Time Tracking</h3>
@@ -114,6 +94,7 @@
   </div>
 
   <!-- Project Time Tracking Form -->
+  <div id="mainContent" style="display: none;"></div>
   <div class="glass-container hidden" id="projectForm">
     <button class="back-btn" id="backFromProject">
       <i class="fas fa-arrow-left"></i> Back to Portal
@@ -128,25 +109,7 @@
     <p style="text-align: center; margin-bottom: 25px;">Please fill in the details below to record your time</p>
     
     <div id="projectFormArea">
-      <!-- Radio Button Group -->
-      <div class="radio-group">
-        <div class="radio-option">
-          <input type="radio" id="hourlyTracked" name="timeType" value="Hourly Tracked" checked>
-          <label for="hourlyTracked">Hourly Tracked</label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="manualTime" name="timeType" value="Manual Time">
-          <label for="manualTime">Manual Time</label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="testTask" name="timeType" value="Test Task">
-          <label for="testTask">Test Task</label>
-        </div>
-        <div class="radio-option">
-          <input type="radio" id="fixedProject" name="timeType" value="Fixed Project">
-          <label for="fixedProject">Fixed Project</label>
-        </div>
-      </div>
+     
 
       <div class="form-grid-two-column">
         <div class="form-group">
@@ -158,15 +121,20 @@
         </div>
 
         <div class="form-group">
-          <label for="projectName"><i class="fas fa-project-diagram"></i>Project Name *</label>
+          <label for="projectName"><i class="fas fa-project-diagram"></i>Client Name *</label>
           <select id="projectName" required>
-            <option value="" disabled selected>Select Project</option>
+            <option value="" disabled selected>Select Client</option>
           </select>
           <i class="fas fa-chevron-down input-icon"></i>
           <div id="otherProjectGroup" class="hidden other-project-input">
-            <input type="text" id="otherProject" name="otherProject" placeholder="Specify project name">
+            <input type="text" id="otherProject" name="otherProject" placeholder="Specify Client Name">
           </div>
         </div>
+ <!-- Dropdown for Time Type -->
+      <div class="form-group">
+  <label>Time Type</label>
+  <div id="timeTypeOptions" class="time-type-radio-group"></div>
+</div>
 
         <div class="form-group">
           <label for="teamMember"><i class="fas fa-users"></i>Team Member *</label>
@@ -175,13 +143,7 @@
           </select>
           <i class="fas fa-chevron-down input-icon"></i>
         </div>
-
-        <div class="form-group">
-          <label for="trackingDate"><i class="far fa-calendar-alt"></i>Tracking Date *</label>
-          <input type="date" id="trackingDate" required>
-        </div>
       </div>
-      
       <div class="time-group">
         <div class="form-group">
           <label for="startTime"><i class="far fa-clock"></i>Start Time *</label>
@@ -194,11 +156,27 @@
           <i class="fas fa-chevron-down input-icon"></i>
         </div>
       </div>
+<div class="form-grid-two-column">
+      <div class="form-group">
+          <label for="trackingDate"><i class="far fa-calendar-alt"></i>Tracking Date *</label>
+          <input type="date" id="trackingDate" required>
+        </div>
       
-      <div class="hours-display">
-        <i class="fas fa-calculator"></i> Total Time: <span id="totalTimeLabel">0:00</span>
-      </div>
-      <input type="hidden" name="totalTime" id="totalTime">
+      
+    <div class="form-group">
+  <label style="display: flex; align-items: center;">
+    <i class="fas fa-calculator" style="margin-right: 8px;"></i> Total Time:
+  </label>
+  <div class="hours-display">
+    <span id="totalTimeLabel">0.00</span> hours
+
+  </div> 
+
+</div>
+<input type="hidden" name="totalTime" id="totalTime">
+
+</div>
+      
       
       <div class="form-group">
         <label for="memo"><i class="far fa-sticky-note"></i>Memo</label>
@@ -228,103 +206,122 @@
     </div>
   </div>
 
-  <!-- Overtime Form -->
-  <div class="glass-container hidden" id="overtimeForm">
-    <button class="back-btn" id="backFromOvertime">
-      <i class="fas fa-arrow-left"></i> Back to Portal
-    </button>
-    
-    <div class="logo-header">
-      <img src="https://raw.githubusercontent.com/raohamza08/EurosHub/main/EurosHub.png" class="logo" alt="EurosHub Logo" />
-      <div class="brand-name">EurosHub</div>
-    </div>
+ <!-- Overtime Form -->
+<!-- Overtime Form -->
+<div class="glass-container hidden" id="overtimeForm">
+  <button class="back-btn" id="backFromOvertime">
+    <i class="fas fa-arrow-left"></i> Back to Portal
+  </button>
 
-    <h2 class="form-title"><i class="fas fa-business-time" style="margin-right: 10px;"></i>Overtime Request</h2>
-    <p style="text-align: center; margin-bottom: 25px;">Please fill in the details below to submit your overtime request</p>
-    
-    <div id="overtimeFormArea">
-      <div class="side-by-side">
-        <div class="form-group">
-          <label for="employee"><i class="fas fa-user"></i> Employee Name *</label>
-          <select id="employee" name="employee" required>
-            <option value="" disabled selected>Select Employee</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="project"><i class="fas fa-project-diagram"></i> Project *</label>
-          <select id="project" name="project" required>
-            <option value="" disabled selected>Select Project</option>
-          </select>
-        </div>
-      </div>
-
-     <div class="side-by-side">
-  <div class="form-group">
-    <label for="date"><i class="fas fa-calendar-day"></i>Overtime Date *</label>
-    <input type="date" id="date" required>
+  <div class="logo-header">
+    <img src="https://raw.githubusercontent.com/raohamza08/EurosHub/main/EurosHub.png" class="logo" alt="EurosHub Logo" />
+    <div class="brand-name">EurosHub</div>
   </div>
 
-  <div class="form-group">
-    <label for="reason"><i class="fas fa-question-circle"></i>Reason *</label>
-    <select id="reason" required>
-      <option value="" disabled selected>Select reason</option>
-      <option value="Project Deadline">Project Deadline</option>
-      <option value="Emergency Fix">Emergency Fix</option>
-      <option value="Client Request">Client Request</option>
-      <option value="Other">Other</option>
-    </select>
-  </div>
-</div>
+  <h2 class="form-title"><i class="fas fa-business-time" style="margin-right: 10px;"></i>Overtime Request</h2>
+  <p style="text-align: center; margin-bottom: 25px;">Please fill in the details below to submit your overtime request</p>
 
-      <div class="time-group">
-        <div class="form-group">
-          <label for="start"><i class="fas fa-clock"></i>Start Time *</label>
-          <input type="time" id="start" required>
-        </div>
-        <div class="form-group">
-          <label for="end"><i class="fas fa-clock"></i>End Time *</label>
-          <input type="time" id="end" required>
-        </div>
-      </div>
-      
-      <div class="hours-display">
-        <i class="fas fa-calculator"></i> Total: <span id="hoursDisplay">0.00</span> hours
-      </div>
-      <input type="hidden" name="totalTimeOvertime" id="totalTimeOvertime">
-
+  <div id="overtimeFormArea">
+    <!-- Row 1: Employee Name & Profile -->
+    <div class="side-by-side">
       <div class="form-group">
-        <label for="notes"><i class="fas fa-sticky-note"></i>Additional Notes</label>
-        <textarea id="notes" rows="3" placeholder="Any additional information..."></textarea>
+        <label for="employee"><i class="fas fa-user"></i> Employee Name *</label>
+        <select id="employee" required>
+          <option value="" disabled selected>Select Employee</option>
+        </select>
       </div>
-      
-      <div class="button-group-grid">
-        <div class="form-group">
-          <button type="button" id="submitOvertimeBtn" class="btn">
-            <i class="fas fa-paper-plane"></i> Submit Request
-          </button>
-        </div>
-        <div class="form-group">
-          <button type="button" id="resetOvertimeBtn" class="btn btn-secondary">
-            <i class="fas fa-redo"></i> Reset Form
-          </button>
-        </div>
+      <div class="form-group">
+        <label for="overtimeProfile"><i class="fas fa-id-badge"></i> Profile Name *</label>
+        <select id="overtimeProfile" required>
+          <option value="" disabled selected>Select Profile</option>
+        </select>
       </div>
     </div>
 
-    <div class="thank-you hidden" id="overtimeThankYou">
+    <!-- Row 2: Project & Reason -->
+    <div class="side-by-side">
+      <div class="form-group">
+        <label for="overtimeProject"><i class="fas fa-project-diagram"></i> Project *</label>
+        <select id="overtimeProject" required>
+          <option value="" disabled selected>Select Project</option>
+        </select>
+        <div id="overtimeOtherProjectGroup" class="hidden" style="margin-top: 10px;">
+          <input type="text" id="overtimeOtherProject" placeholder="Enter custom project name" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reason"><i class="fas fa-question-circle"></i> Reason *</label>
+        <select id="reason" required>
+          <option value="" disabled selected>Select reason</option>
+          <option value="Project Deadline">Project Deadline</option>
+          <option value="Emergency Fix">Emergency Fix</option>
+          <option value="Client Request">Client Request</option>
+          <option value="Extra Work">Extra Work</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Row 3: Start & End Time -->
+    <div class="side-by-side">
+      <div class="form-group">
+        <label for="start"><i class="fas fa-clock"></i> Start Time *</label>
+        <input type="time" id="start" required>
+      </div>
+      <div class="form-group">
+        <label for="end"><i class="fas fa-clock"></i> End Time *</label>
+        <input type="time" id="end" required>
+      </div>
+    </div>
+
+    <!-- Row 4: Date & Total Time -->
+    <div class="side-by-side">
+      <div class="form-group">
+        <label for="overtimeDate"><i class="fas fa-calendar-day"></i> Overtime Date *</label>
+        <input type="date" id="overtimeDate" required>
+      </div>
+      <div class="form-group">
+        <label><i class="fas fa-calculator"></i> Total Hours</label>
+        <div class="hours-display">
+          <span id="hoursDisplay">0.00</span> hours
+        </div>
+        <input type="hidden" id="totalTimeOvertime" name="totalTimeOvertime" />
+      </div>
+    </div>
+
+    <!-- Row 5: Notes and Buttons -->
+    <div class="form-group">
+      <label for="notes"><i class="fas fa-sticky-note"></i> Additional Notes</label>
+      <textarea id="notes" rows="3" placeholder="Any additional information..."></textarea>
+    </div>
+
+    <div class="button-group-grid">
+      <div class="form-group">
+        <button type="button" id="submitOvertimeBtn" class="btn">
+          <i class="fas fa-paper-plane"></i> Submit Request
+        </button>
+      </div>
+      <div class="form-group">
+        <button type="button" id="resetOvertimeBtn" class="btn btn-secondary">
+          <i class="fas fa-redo"></i> Reset Form
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="thank-you hidden" id="overtimeThankYou">
       <h3><i class="fas fa-check-circle" style="color: var(--secondary); margin-right: 10px;"></i> Request Submitted!</h3>
       <p>Your overtime request has been successfully recorded.</p>
       <button class="btn" id="anotherOvertimeEntry">
         <i class="fas fa-plus"></i> Create Another Entry
       </button>
     </div>
+</div>
+
+    
   </div>
 
- 
-
   <script src="script.js"></script>
-<script>
+  <script>
     particlesJS('stars-js', {
       particles: {
         number: {
@@ -354,9 +351,9 @@
         },
         line_linked: {
           enable: true,
-          distance: 100, // ⬆️ More connections
+          distance: 100,
           color: "#00d9bd",
-          opacity: 0.5,   // ⬆️ Stronger visibility
+          opacity: 0.5,
           width: 1
         }
       },
@@ -385,27 +382,60 @@
       }
     });
   </script>
+  <script>
+    $(document).ready(function () {
+      // Attach to all select2 instances
+      $('#profileName, #projectName, #teamMember, #employee, #project, #reason').on('select2:open', function (e) {
+        const icon = $(this).closest('.form-group').find('.input-icon');
+        icon.addClass('rotate');
+      });
+
+      $('#profileName, #projectName, #teamMember, #employee, #project, #reason').on('select2:close', function (e) {
+        const icon = $(this).closest('.form-group').find('.input-icon');
+        icon.removeClass('rotate');
+      });
+    });
+  </script>
+  <script>
+  const correctPassword = "EurosHub";
+  let enterButton = null;
+
+  document.addEventListener("DOMContentLoaded", () => {
+    enterButton = document.querySelector('#passwordOverlay button');
+    enterButton.addEventListener("click", checkPassword);
+  });
+
+  function checkPassword() {
+    const input = document.getElementById('passwordInput').value;
+    if (input === correctPassword) {
+      document.getElementById('passwordOverlay').style.display = "none";
+    } else {
+      document.getElementById('passwordError').style.display = "block";
+      animateButtonError();
+    }
+  }
+
+  function animateButtonError() {
+    enterButton.classList.remove('shake'); // restart animation
+    void enterButton.offsetWidth; // force reflow
+    enterButton.classList.add('shake');
+
+    enterButton.style.backgroundColor = '#e74c3c'; // red
+    setTimeout(() => {
+      enterButton.style.backgroundColor = '#00BFA6'; // back to green
+    }, 800);
+  }
+</script>
 <script>
   $(document).ready(function () {
-    // Attach to all select2 instances
-    $('#profileName, #projectName, #teamMember, #employee, #project, #reason').on('select2:open', function (e) {
-      const icon = $(this).closest('.form-group').find('.input-icon');
-      icon.addClass('rotate');
-    });
-
-    $('#profileName, #projectName, #teamMember, #employee, #project, #reason').on('select2:close', function (e) {
-      const icon = $(this).closest('.form-group').find('.input-icon');
-      icon.removeClass('rotate');
+    $('select').select2({
+      width: 'resolve',
+      dropdownAutoWidth: true,
+      theme: 'default'
     });
   });
 </script>
 
 
-
-
-
 </body>
 </html>
-
-
-
